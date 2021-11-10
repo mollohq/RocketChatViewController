@@ -259,19 +259,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-RocketChatViewController Example/Pods-RocketChatViewController Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
-				"${BUILT_PRODUCTS_DIR}/RocketChatViewController/RocketChatViewController.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RocketChatViewController Example/Pods-RocketChatViewController Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RocketChatViewController.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RocketChatViewController Example/Pods-RocketChatViewController Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RocketChatViewController Example/Pods-RocketChatViewController Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RocketChatViewController Example/Pods-RocketChatViewController Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8B9944679484906D163D3401 /* [CP] Check Pods Manifest.lock */ = {

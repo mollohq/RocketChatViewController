@@ -48,6 +48,7 @@ public protocol ComposerViewExpandedDelegate: ComposerViewDelegate,
     func composerView(_ composerView: ComposerView, didReleaseRecordAudioButton button: UIButton)
     func composerView(_ composerView: ComposerView, didDragRecordAudioButton button: UIButton, delta: CGFloat)
     func composerView(_ composerView: ComposerView, didFinishRecordingAudio url: URL)
+	func composerView(_ composerView: ComposerView, didPressEmojiButton: UIButton)
 }
 
 public extension ComposerViewExpandedDelegate {
@@ -86,8 +87,11 @@ public extension ComposerViewExpandedDelegate {
     func composerView(_ composerView: ComposerView, willConfigureButton button: ComposerButton) {
         if button == composerView.rightButton {
             let image = composerView.textView.text.isEmpty
-                ? ComposerAssets.micButtonImage : ComposerAssets.sendButtonImage
+                ? ComposerAssets.microphone : ComposerAssets.sendButtonImage
             button.setBackgroundImage(image, for: .normal)
+			button.tintColor = composerView.textView.text.isEmpty
+			? #colorLiteral(red: 0.695, green: 0.725, blue: 0.704, alpha: 1)
+			: #colorLiteral(red: 0.4862745098, green: 0.9058823529, blue: 0.3411764706, alpha: 1)
         }
     }
 
@@ -112,6 +116,10 @@ public extension ComposerViewExpandedDelegate {
             if button === composerView.leftButton {
                 self.composerView(composerView, didPressUploadButton: button)
             }
+			
+			if button === composerView.emojiButton {
+				self.composerView(composerView, didPressEmojiButton: button)
+			}
         }
 
         if eventType == .touchUpOutside {

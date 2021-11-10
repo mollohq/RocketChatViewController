@@ -123,6 +123,10 @@ extension ChatViewController: ComposerViewExpandedDelegate {
     func composerView(_ composerView: ComposerView, didPressUploadButton button: UIButton) {
 
     }
+	
+	func composerView(_ composerView: ComposerView, didPressEmojiButton: UIButton) {
+		
+	}
 
     // MARK: Hint
 

@@ -16,7 +16,7 @@ DEPENDENCIES:
   - RocketChatViewController (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - DifferenceKit
 
 EXTERNAL SOURCES:
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DifferenceKit: cf1b84e2207ea45c3640381cb229cf46c1647466
-  RocketChatViewController: c6577c52bce989a964d73ef3908c9f8e050ecdac
+  RocketChatViewController: ab532fa2810a165dc4f8e79a337253c09434cce6
 
 PODFILE CHECKSUM: eb43d8cd34af6ceb38604c3a89056ceced3816c6
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.11.2

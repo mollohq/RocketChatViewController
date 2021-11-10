@@ -92,28 +92,36 @@ public class ComposerTextView: UITextView {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(placeholderLabel)
         updateConstraintsForPlaceholderLabel()
+		self.textContainerInset = UIEdgeInsets(top: 12, left: 5, bottom: 10, right: 5 + 24 + 16)
+		self.layer.cornerRadius = 16
+		self.layer.borderWidth = 1
+		self.layer.borderColor = placeholderColor.cgColor
     }
 
     private func updateConstraintsForPlaceholderLabel() {
-        let newConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]",
-            options: [],
-            metrics: nil,
-            views: ["placeholder": placeholderLabel]
-        ) + NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(\(textContainerInset.top))-[placeholder]",
-            options: [],
-            metrics: nil,
-            views: ["placeholder": placeholderLabel]
-        ) + [NSLayoutConstraint(
-            item: placeholderLabel,
-            attribute: .width,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .width,
-            multiplier: 1.0,
-            constant: -(textContainerInset.left + textContainerInset.right + textContainer.lineFragmentPadding * 2.0)
-        )]
+		let newConstraints = [NSLayoutConstraint(item: placeholderLabel, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 12),
+							  NSLayoutConstraint(item: placeholderLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 12),
+							  NSLayoutConstraint(item: placeholderLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 16),
+							  NSLayoutConstraint(item: placeholderLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 16)]
+//        let newConstraints = NSLayoutConstraint.constraints(
+//            withVisualFormat: "H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding + 12))-[placeholder]",
+//            options: [],
+//            metrics: nil,
+//            views: ["placeholder": placeholderLabel]
+//        ) + NSLayoutConstraint.constraints(
+//            withVisualFormat: "V:|-(\(textContainerInset.top))-[placeholder]",
+//            options: [],
+//            metrics: nil,
+//            views: ["placeholder": placeholderLabel]
+//        ) + [NSLayoutConstraint(
+//            item: placeholderLabel,
+//            attribute: .width,
+//            relatedBy: .equal,
+//            toItem: self,
+//            attribute: .width,
+//            multiplier: 1.0,
+//            constant: -(textContainerInset.left + textContainerInset.right + textContainer.lineFragmentPadding * 2.0)
+//        )]
 
         removeConstraints(placeholderLabelConstraints)
         addConstraints(newConstraints)

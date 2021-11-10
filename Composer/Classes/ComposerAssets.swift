@@ -9,6 +9,10 @@
 import UIKit
 
 public struct ComposerAssets {
+	public static let microphone = imageNamed("microphone_icon")
+	public static let paperclip = imageNamed("paperclip_icon")
+	public static let smile = imageNamed("smile_icon")
+	
     public static let addButtonImage = imageNamed("Add Button")
     public static let sendButtonImage = imageNamed("Send Button")
     public static let micButtonImage = imageNamed("Mic Button")

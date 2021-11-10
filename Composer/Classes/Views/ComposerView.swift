@@ -63,7 +63,7 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let leftButton = tap(ComposerButton()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setBackgroundImage(ComposerAssets.addButtonImage, for: .normal)
+        $0.setBackgroundImage(ComposerAssets.paperclip, for: .normal)
 
         $0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
         $0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
@@ -79,7 +79,7 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let rightButton = tap(ComposerButton()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setBackgroundImage(ComposerAssets.sendButtonImage, for: .normal)
+        $0.setBackgroundImage(ComposerAssets.microphone, for: .normal)
 
         $0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
         $0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
@@ -89,6 +89,19 @@ public class ComposerView: UIView, ComposerLocalizable {
 
         $0.setContentHuggingPriority(.required, for: .horizontal)
     }
+	
+	public let emojiButton = tap(ComposerButton()) {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.setBackgroundImage(ComposerAssets.smile, for: .normal)
+
+		$0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
+		$0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
+		$0.addTarget(self, action: #selector(touchDownInButton), for: .touchDown)
+		$0.addTarget(self, action: #selector(touchDragInsideButton), for: .touchDragInside)
+		$0.addTarget(self, action: #selector(touchDragOutsideButton), for: .touchDragOutside)
+
+		$0.setContentHuggingPriority(.required, for: .horizontal)
+	}
 
     /**
      The text view used to compose the message.
@@ -98,7 +111,7 @@ public class ComposerView: UIView, ComposerLocalizable {
 
         $0.text = ""
         $0.placeholderLabel.text = localized(.textViewPlaceholder)
-        $0.placeholderLabel.font = .preferredFont(forTextStyle: .body)
+		$0.placeholderLabel.font = UIFont.systemFont(ofSize: 14)//.preferredFont(forTextStyle: .body)
         $0.placeholderLabel.adjustsFontForContentSizeCategory = true
 
         $0.font = .preferredFont(forTextStyle: .body)
@@ -189,6 +202,7 @@ public class ComposerView: UIView, ComposerLocalizable {
         containerView.addSubview(leftButton)
         containerView.addSubview(rightButton)
         containerView.addSubview(textView)
+		containerView.addSubview(emojiButton)
         containerView.addSubview(componentStackView)
         containerView.addSubview(topSeparatorView)
         containerView.addSubview(utilityStackView)
@@ -198,7 +212,7 @@ public class ComposerView: UIView, ComposerLocalizable {
     // MARK: Constraints
 
     lazy var textViewLeadingConstraint: NSLayoutConstraint = {
-        textView.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: 0)
+        textView.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor, constant: 16)
     }()
 
     lazy var containerViewLeadingConstraint: NSLayoutConstraint = {
@@ -239,18 +253,24 @@ public class ComposerView: UIView, ComposerLocalizable {
             // textView constraints
 
             textViewLeadingConstraint,
-            textView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor, constant: 0),
+            textView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor, constant: -16),
+			textView.heightAnchor.constraint(greaterThanOrEqualToConstant: 48),
             textView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -layoutMargins.bottom),
 
             // rightButton constraints
 
             rightButton.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: -layoutMargins.right*2),
-            rightButton.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant:  -layoutMargins.bottom*2),
+            rightButton.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: -12),
 
             // leftButton constraints
 
             leftButton.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: layoutMargins.left*2),
-            leftButton.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -layoutMargins.bottom*2),
+            leftButton.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: -12),
+			
+			// emojiButton constraints
+			 
+			emojiButton.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: -12),
+			emojiButton.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -16),
 
             // overlayView constraints
 
@@ -293,6 +313,7 @@ public extension ComposerView {
 
         leftButton.isUserInteractionEnabled = false
         rightButton.isUserInteractionEnabled = false
+		emojiButton.isUserInteractionEnabled = false
         isTextInputEnabled = false
 
         currentDelegate.composerView(self, willConfigureOverlayView: overlayView, with: userData)
@@ -304,6 +325,7 @@ public extension ComposerView {
 
         leftButton.isUserInteractionEnabled = true
         rightButton.isUserInteractionEnabled = true
+		emojiButton.isUserInteractionEnabled = true
         isTextInputEnabled = true
     }
 }
@@ -314,6 +336,7 @@ public extension ComposerView {
     func configureButtons() {
         currentDelegate.composerView(self, willConfigureButton: leftButton)
         currentDelegate.composerView(self, willConfigureButton: rightButton)
+		currentDelegate.composerView(self, willConfigureButton: emojiButton)
     }
 }
 
