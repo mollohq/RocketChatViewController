@@ -62,7 +62,7 @@ public class ComposerView: UIView, ComposerLocalizable {
      The button that stays in the left side of the composer.
      */
     
-    var sendRightTintColor: UIColor = #colorLiteral(red: 0.4862745098, green: 0.9058823529, blue: 0.3411764706, alpha: 1) {
+    public var sendRightTintColor: UIColor = #colorLiteral(red: 0.4862745098, green: 0.9058823529, blue: 0.3411764706, alpha: 1) {
         didSet {
             if !textView.text.isEmpty {
                 rightButton.tintColor = sendRightTintColor
@@ -70,7 +70,7 @@ public class ComposerView: UIView, ComposerLocalizable {
         }
     }
     
-    var defaultRightTintColor: UIColor =  #colorLiteral(red: 0.695, green: 0.725, blue: 0.704, alpha: 1) {
+    public var defaultRightTintColor: UIColor =  #colorLiteral(red: 0.695, green: 0.725, blue: 0.704, alpha: 1) {
         didSet {
             if textView.text.isEmpty {
                 rightButton.tintColor = defaultRightTintColor
