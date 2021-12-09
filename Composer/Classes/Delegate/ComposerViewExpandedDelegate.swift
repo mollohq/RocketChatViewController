@@ -89,9 +89,7 @@ public extension ComposerViewExpandedDelegate {
             let image = composerView.textView.text.isEmpty
                 ? ComposerAssets.microphone : ComposerAssets.sendButtonImage
             button.setBackgroundImage(image, for: .normal)
-			button.tintColor = composerView.textView.text.isEmpty
-			? #colorLiteral(red: 0.695, green: 0.725, blue: 0.704, alpha: 1)
-			: #colorLiteral(red: 0.4862745098, green: 0.9058823529, blue: 0.3411764706, alpha: 1)
+            button.tintColor = composerView.textView.text.isEmpty ? composerView.defaultRightTintColor : composerView.sendRightTintColor
         }
     }
 
