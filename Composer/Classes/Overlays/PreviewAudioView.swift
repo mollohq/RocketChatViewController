@@ -8,12 +8,32 @@
 import UIKit
 import AVFoundation
 
-public protocol PreviewAudioViewDelegate: class {
+public protocol PreviewAudioViewDelegate: AnyObject {
+    
     func previewAudioView(_ view: PreviewAudioView, didConfirmAudio url: URL)
     func previewAudioView(_ view: PreviewAudioView, didDiscardAudio url: URL)
 }
 
 public class PreviewAudioView: UIView, ComposerLocalizable {
+    
+    public var separatorColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            separatorView.backgroundColor = separatorColor
+        }
+    }
+    
+    public var discardTintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            discardButton.tintColor = discardTintColor
+        }
+    }
+    
+    public var sendTintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            sendButton.tintColor = sendTintColor
+        }
+    }
+    
     public weak var composerView: ComposerView?
     public weak var delegate: PreviewAudioViewDelegate?
 
@@ -29,13 +49,12 @@ public class PreviewAudioView: UIView, ComposerLocalizable {
             $0.widthAnchor.constraint(equalToConstant: Consts.discardButtonWidth),
         ])
 
-        $0.setBackgroundImage(ComposerAssets.discardButtonImage, for: .normal)
+        $0.setImage(ComposerAssets.delete, for: .normal)
         $0.addTarget(self, action: #selector(touchUpInsideDiscardButton), for: .touchUpInside)
     }
 
     public let separatorView = tap(UIView()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = #colorLiteral(red: 0.7960784314, green: 0.8078431373, blue: 0.8196078431, alpha: 1)
 
         $0.addConstraints([
             $0.heightAnchor.constraint(equalToConstant: Consts.separatorViewHeight),
@@ -51,7 +70,7 @@ public class PreviewAudioView: UIView, ComposerLocalizable {
             $0.widthAnchor.constraint(equalToConstant: Consts.discardButtonWidth),
         ])
 
-        $0.setBackgroundImage(ComposerAssets.sendButtonImage, for: .normal)
+        $0.setImage(ComposerAssets.send, for: .normal)
         $0.addTarget(self, action: #selector(touchUpInsideSendButton), for: .touchUpInside)
     }
 
@@ -114,6 +133,10 @@ public class PreviewAudioView: UIView, ComposerLocalizable {
 
         addSubviews()
         setupConstraints()
+        
+        separatorView.backgroundColor = separatorColor
+        discardButton.tintColor = discardTintColor
+        sendButton.tintColor = sendTintColor
     }
 
     /**
@@ -200,9 +223,46 @@ extension PreviewAudioView {
 // MARK: SwipeIndicatorView
 
 public class AudioView: UIView {
+    
+    public var mainBackgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+        didSet {
+            backgroundColor = mainBackgroundColor
+        }
+    }
+    
+    public var minTrackColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            progressSlider.minimumTrackTintColor = minTrackColor
+        }
+    }
+    
+    public var maxTrackColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) {
+        didSet {
+            progressSlider.maximumTrackTintColor = maxTrackColor
+        }
+    }
+    
+    public var thumbTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) {
+        didSet {
+            progressSlider.thumbTintColor = thumbTintColor
+        }
+    }
+    
+    public var playTintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            playButton.tintColor = playTintColor
+        }
+    }
+    
+    public var timeColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            timeLabel.textColor = timeColor
+        }
+    }
+    
     public let playButton = tap(UIButton()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setImage(ComposerAssets.playButtonImage, for: .normal)
+        $0.setImage(ComposerAssets.play, for: .normal)
 
         NSLayoutConstraint.activate([
             $0.widthAnchor.constraint(equalToConstant: Consts.playButtonWidth),
@@ -216,9 +276,6 @@ public class AudioView: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
 
         $0.value = 0
-        $0.setThumbImage(ComposerAssets.sliderThumbImage, for: .normal)
-        $0.minimumTrackTintColor = #colorLiteral(red: 0.3294117647, green: 0.3450980392, blue: 0.368627451, alpha: 1)
-        $0.maximumTrackTintColor = #colorLiteral(red: 0.3294117647, green: 0.3450980392, blue: 0.368627451, alpha: 1)
 
         $0.addTarget(self, action: #selector(didStartSlidingSlider(_:)), for: .touchDown)
         $0.addTarget(self, action: #selector(didFinishSlidingSlider(_:)), for: .touchUpInside)
@@ -230,7 +287,6 @@ public class AudioView: UIView {
 
         $0.text = "0:00"
         $0.font = UIFont.systemFont(ofSize: Consts.timeLabelFontSize)
-        $0.textColor = #colorLiteral(red: 0.3294117647, green: 0.3450980392, blue: 0.368627451, alpha: 1)
         $0.adjustsFontForContentSizeCategory = true
 
         $0.numberOfLines = 1
@@ -260,8 +316,8 @@ public class AudioView: UIView {
                 player?.pause()
             }
 
-            let pause = ComposerAssets.pauseButtonImage
-            let play = ComposerAssets.playButtonImage
+            let pause = ComposerAssets.pause
+            let play = ComposerAssets.play
             playButton.setImage(playing ? pause : play, for: .normal)
         }
     }
@@ -280,7 +336,7 @@ public class AudioView: UIView {
      Shared initialization procedures.
      */
     private func commonInit() {
-        backgroundColor = #colorLiteral(red: 0.968627451, green: 0.9725490196, blue: 0.9803921569, alpha: 1)
+        backgroundColor = mainBackgroundColor
         layer.cornerRadius = Consts.layerCornerRadius
         clipsToBounds = true
 
@@ -290,6 +346,12 @@ public class AudioView: UIView {
 
         addSubviews()
         setupConstraints()
+        
+        progressSlider.minimumTrackTintColor = minTrackColor
+        progressSlider.maximumTrackTintColor = maxTrackColor
+        progressSlider.thumbTintColor = thumbTintColor
+        playButton.tintColor = playTintColor
+        timeLabel.textColor = timeColor
     }
 
     /**

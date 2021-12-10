@@ -42,6 +42,13 @@ private final class HintsViewFallbackDelegate: HintsViewDelegate {
 }
 
 public class HintsView: UITableView {
+    
+    public var hintHeaderColor = #colorLiteral(red: 0.6196078431, green: 0.6352941176, blue: 0.6588235294, alpha: 1) {
+        didSet {
+            reloadData()
+        }
+    }
+    
     public weak var hintsDelegate: HintsViewDelegate?
     private var fallbackDelegate: HintsViewDelegate = HintsViewFallbackDelegate()
 
@@ -183,6 +190,6 @@ extension HintsView: UITableViewDelegate {
 
         header.backgroundView?.backgroundColor = backgroundColor
         header.textLabel?.text = currentDelegate.title(for: self)
-        header.textLabel?.textColor = #colorLiteral(red: 0.6196078431, green: 0.6352941176, blue: 0.6588235294, alpha: 1)
+        header.textLabel?.textColor = hintHeaderColor
     }
 }

@@ -12,7 +12,7 @@ import UIKit
  The delegate of an ComposerView object must adopt the ComposerViewDelegate protocol.
  Optional methods of the protocol allow the delegate to configure composer addons and perform actions.
  */
-public protocol ComposerViewDelegate: class {
+public protocol ComposerViewDelegate: AnyObject {
     /**
      Asks the how many addons to place in the composer.
      */

@@ -21,9 +21,23 @@ public class FallbackComposerTextViewDelegate: ComposerTextViewDelegate {
 }
 
 public class ComposerTextView: UITextView {
+    
+    
+    
     public let placeholderLabel: UILabel = UILabel()
-    public let placeholderColor: UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22)
-
+    
+    public var placeholderColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1) {
+        didSet {
+            placeholderLabel.textColor = placeholderColor
+        }
+    }
+    
+    public var borderColor  = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1) {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+    
     private var placeholderLabelConstraints = [NSLayoutConstraint]()
 
     public weak var textViewDelegate: ComposerTextViewDelegate?

@@ -9,37 +9,33 @@
 import UIKit
 
 public struct ComposerAssets {
-	public static let microphone = imageNamed("microphone_icon")
-	public static let paperclip = imageNamed("paperclip_icon")
-	public static let smile = imageNamed("smile_icon")
-	
-    public static let addButtonImage = imageNamed("Add Button")
-    public static let sendButtonImage = imageNamed("Send Button")
-    public static let micButtonImage = imageNamed("Mic Button")
-
-    public static let cancelReplyButtonImage = imageNamed("Cancel Reply Button")
-
-    public static let redMicButtonImage = imageNamed("Red Mic Button")
-    public static let grayArrowLeftButtonImage = imageNamed("Gray Arrow Left")
-
-    public static let playButtonImage = imageNamed("Play Button")
-    public static let pauseButtonImage = imageNamed("Pause Button")
-    public static let sliderThumbImage = imageNamed("Slider Thumb")
-    public static let discardButtonImage = imageNamed("Discard Button")
-
+    
+    public static let mic = imageNamed("mic_icon")
+    public static let clip = imageNamed("clip_icon")
+    public static let emoji = imageNamed("emoji_icon")
+    public static let send = imageNamed("send_icon")
+    public static let cancel = imageNamed("cancel_icon")
+    
+    public static let arrow = imageNamed("arrow_icon")
+    
+    public static let play = imageNamed("play_icon")
+    public static let pause = imageNamed("pause_icon")
+    
+    public static let delete = imageNamed("delete_icon")
+    
     private static let bundle = Bundle(for: ComposerView.self)
-
+    
     private static func imageNamed(_ name: String) -> UIImage {
         let image = UIImage(named: name, in: bundle, compatibleWith: nil)
         return image ?? UIImage()
     }
-
-    // MARK: Sounds
-
+    
+    // MARK: - Sounds
+    
     public static var startAudioRecordSound: URL? {
         return bundle.url(forResource: "start_audio_record", withExtension: "m4a")
     }
-
+    
     public static var cancelAudioRecordSound: URL? {
         return bundle.url(forResource: "cancel_audio_record", withExtension: "m4a")
     }

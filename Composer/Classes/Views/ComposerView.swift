@@ -55,14 +55,19 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let containerView = tap(UIView()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .white
     }
 
     /**
      The button that stays in the left side of the composer.
      */
     
-    public var sendRightTintColor: UIColor = #colorLiteral(red: 0.4862745098, green: 0.9058823529, blue: 0.3411764706, alpha: 1) {
+    public var mainBackgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1) {
+        didSet {
+            containerView.backgroundColor = mainBackgroundColor
+        }
+    }
+    
+    public var sendRightTintColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1) {
         didSet {
             if !textView.text.isEmpty {
                 rightButton.tintColor = sendRightTintColor
@@ -70,7 +75,7 @@ public class ComposerView: UIView, ComposerLocalizable {
         }
     }
     
-    public var defaultRightTintColor: UIColor =  #colorLiteral(red: 0.695, green: 0.725, blue: 0.704, alpha: 1) {
+    public var defaultRightTintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
         didSet {
             if textView.text.isEmpty {
                 rightButton.tintColor = defaultRightTintColor
@@ -78,16 +83,38 @@ public class ComposerView: UIView, ComposerLocalizable {
         }
     }
     
+    public var leftTintColor  = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            leftButton.tintColor = leftTintColor
+        }
+    }
+    
+    public var emojiTintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            emojiButton.tintColor = emojiTintColor
+        }
+    }
+    
+    public var textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+        didSet {
+            textView.textColor = textColor
+        }
+    }
+    
+    public var topSeparatorColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1) {
+        didSet {
+            topSeparatorView.backgroundColor = topSeparatorColor
+        }
+    }
+    
     public let leftButton = tap(ComposerButton()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setBackgroundImage(ComposerAssets.paperclip, for: .normal)
-
+        $0.setImage(ComposerAssets.clip, for: .normal)
         $0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
         $0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
         $0.addTarget(self, action: #selector(touchDownInButton), for: .touchDown)
         $0.addTarget(self, action: #selector(touchDragInsideButton), for: .touchDragInside)
         $0.addTarget(self, action: #selector(touchDragOutsideButton), for: .touchDragOutside)
-
         $0.setContentHuggingPriority(.required, for: .horizontal)
     }
 
@@ -96,20 +123,18 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let rightButton = tap(ComposerButton()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.setBackgroundImage(ComposerAssets.microphone, for: .normal)
-
+        $0.setImage(ComposerAssets.mic, for: .normal)
         $0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
         $0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
         $0.addTarget(self, action: #selector(touchDownInButton), for: .touchDown)
         $0.addTarget(self, action: #selector(touchDragInsideButton), for: .touchDragInside)
         $0.addTarget(self, action: #selector(touchDragOutsideButton), for: .touchDragOutside)
-
         $0.setContentHuggingPriority(.required, for: .horizontal)
     }
 	
 	public let emojiButton = tap(ComposerButton()) {
 		$0.translatesAutoresizingMaskIntoConstraints = false
-		$0.setBackgroundImage(ComposerAssets.smile, for: .normal)
+        $0.setImage(ComposerAssets.emoji, for: .normal)
 
 		$0.addTarget(self, action: #selector(touchUpInsideButton), for: .touchUpInside)
 		$0.addTarget(self, action: #selector(touchUpOutsideButton), for: .touchUpOutside)
@@ -125,10 +150,9 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let textView = tap(ComposerTextView()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-
-        $0.text = ""
+        
         $0.placeholderLabel.text = localized(.textViewPlaceholder)
-		$0.placeholderLabel.font = UIFont.systemFont(ofSize: 14)//.preferredFont(forTextStyle: .body)
+        $0.placeholderLabel.font = UIFont.systemFont(ofSize: 14.0)
         $0.placeholderLabel.adjustsFontForContentSizeCategory = true
 
         $0.font = .preferredFont(forTextStyle: .body)
@@ -148,8 +172,6 @@ public class ComposerView: UIView, ComposerLocalizable {
      */
     public let topSeparatorView = tap(UIView()) {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = #colorLiteral(red: 0.8823529412, green: 0.8980392157, blue: 0.9098039216, alpha: 1)
-
         NSLayoutConstraint.activate([
             $0.heightAnchor.constraint(equalToConstant: 0.5)
         ])
@@ -208,6 +230,14 @@ public class ComposerView: UIView, ComposerLocalizable {
 
         addSubviews()
         setupConstraints()
+        
+        containerView.backgroundColor = mainBackgroundColor
+        rightButton.tintColor = sendRightTintColor
+        rightButton.tintColor = defaultRightTintColor
+        leftButton.tintColor = leftTintColor
+        emojiButton.tintColor = emojiTintColor
+        textView.textColor = textColor
+        topSeparatorView.backgroundColor = topSeparatorColor
     }
 
     /**

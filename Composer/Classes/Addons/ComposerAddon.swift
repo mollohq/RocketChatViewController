@@ -9,6 +9,7 @@
 import UIKit
 
 public struct ComposerAddon {
+    
     public let viewType: UIView.Type
 
     public static func == (lhs: ComposerAddon, rhs: ComposerAddon) -> Bool {
@@ -17,6 +18,7 @@ public struct ComposerAddon {
 }
 
 public extension ComposerAddon {
+    
     static var reply: ComposerAddon {
         return ComposerAddon(viewType: ReplyView.self)
     }

@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 
 private extension ComposerView {
+    
     var hintsView: HintsView? {
         return utilityStackView.subviews.first(where: { $0 as? HintsView != nil }) as? HintsView
     }
@@ -52,6 +53,7 @@ public protocol ComposerViewExpandedDelegate: ComposerViewDelegate,
 }
 
 public extension ComposerViewExpandedDelegate {
+    
     func composerViewDidChangeSelection(_ composerView: ComposerView) {
         func didChangeHintPrefixedWord(_ word: String) {
             self.composerView(composerView, didChangeHintPrefixedWord: word)
@@ -86,9 +88,8 @@ public extension ComposerViewExpandedDelegate {
 
     func composerView(_ composerView: ComposerView, willConfigureButton button: ComposerButton) {
         if button == composerView.rightButton {
-            let image = composerView.textView.text.isEmpty
-                ? ComposerAssets.microphone : ComposerAssets.sendButtonImage
-            button.setBackgroundImage(image, for: .normal)
+            let image = composerView.textView.text.isEmpty ? ComposerAssets.mic : ComposerAssets.send
+            button.setImage(image, for: .normal)
             button.tintColor = composerView.textView.text.isEmpty ? composerView.defaultRightTintColor : composerView.sendRightTintColor
         }
     }
