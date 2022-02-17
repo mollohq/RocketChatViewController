@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RocketChatViewController'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'RocketChatViewController is a light weight library that allows you to implement a chat on iOS.'
 
 # This description is used to generate tags and improve search results.

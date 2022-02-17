@@ -241,8 +241,17 @@ open class RocketChatViewController: UICollectionViewController {
 
     fileprivate var keyboardHeight: CGFloat = 0.0
 
-    private let invertedTransform = CGAffineTransform(scaleX: 1, y: -1)
-    private let regularTransform = CGAffineTransform(scaleX: 1, y: 1)
+    open var invertedTransform: CGAffineTransform {
+        return CGAffineTransform(scaleX: 1.0, y: -1.0)
+    }
+    
+    open var regularTransform: CGAffineTransform {
+        return .identity
+    }
+    
+    open var shouldTranslatesAutoresizingMaskIntoConstraints: Bool {
+        return true
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -281,7 +290,7 @@ open class RocketChatViewController: UICollectionViewController {
 
         collectionView.transform = isInverted ? invertedTransform : collectionView.transform
 
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = shouldTranslatesAutoresizingMaskIntoConstraints
         collectionView.keyboardDismissMode = .interactive
         collectionView.contentInsetAdjustmentBehavior = isInverted ? .never : .always
 
